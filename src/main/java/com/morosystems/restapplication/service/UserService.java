@@ -15,9 +15,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserEntity<M> getUserById(int id) {
-        Optional<UserEntity<M>> optionalUserEntity = userRepository.findById(id);
-        UserEntity<M> userEntity = optionalUserEntity.get();
+    public UserEntity getUserById(int id) {
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
+        UserEntity userEntity = optionalUserEntity.get();
 //        if (userEntity != null) {
 //            return userEntity;
 //        }
