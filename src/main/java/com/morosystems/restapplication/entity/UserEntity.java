@@ -1,10 +1,10 @@
-package entity;
+package com.morosystems.restapplication.entity;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "MorosystemsUloha")
-public class UsersEntity {
+public class UserEntity<M> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -34,7 +34,7 @@ public class UsersEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UsersEntity that = (UsersEntity) o;
+        UserEntity<M> that = (UserEntity<M>) o;
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
