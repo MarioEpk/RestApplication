@@ -1,13 +1,15 @@
 package com.morosystems.restapplication.service;
 
 import com.morosystems.restapplication.entity.UserEntity;
+import com.morosystems.restapplication.exception.UserNotFoundException;
 import com.morosystems.restapplication.repository.UserRepository;
 import org.springframework.stereotype.Component;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Optional;
 
 @Component
-public class UserService {
+public class UserService implements  IUserService {
 
     private final UserRepository userRepository;
 
@@ -15,13 +17,30 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+
     public UserEntity getUserById(int id) {
-        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
-        UserEntity userEntity = optionalUserEntity.get();
-//        if (userEntity != null) {
-//            return userEntity;
-//        }
-//        throw new IllegalArgumentException();
+        UserEntity userEntity;
+        if (userRepository.findById(id).isEmpty()) {
+            throw new UserNotFoundException();
+        }
+        userEntity = userRepository.findById(id).get();
         return userEntity;
     }
+
+
+    public List<UserEntity> getAllUsers() {
+        return (List<UserEntity>) userRepository.findAll();
+    }
+
+
+    public void createUser(String name, UserEntity userEntity) {
+        userRepository.save(userEntity);
+    }
+
+
+    public void updateUser(int id , UserEntity userEntity) {
+        userRepository.save(userEntity);
+    }
+
+
 }
