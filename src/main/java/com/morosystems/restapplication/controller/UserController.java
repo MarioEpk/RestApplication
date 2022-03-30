@@ -28,12 +28,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @RequestMapping(method=RequestMethod.POST, value="/users/")
+    @PostMapping("/users/")
     public void addUser(@RequestBody UserEntity userEntity, @PathVariable String name) {
         userService.createUser(name, userEntity);
     }
 
-    @RequestMapping(method=RequestMethod.PUT, value="/users/{name}")
+    @PutMapping("/users/{id}")
     public void updateUser(@RequestBody UserEntity userEntity, @PathVariable int id) {
         userService.updateUser(id, userEntity);
     }
