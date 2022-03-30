@@ -7,6 +7,7 @@ import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,12 +30,14 @@ public class UserController {
     }
 
     @PostMapping("/users/")
-    public void addUser(@RequestBody UserEntity userEntity, @PathVariable String name) {
-        userService.createUser(name, userEntity);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addUser(@Valid @RequestBody UserEntity userEntity) {
+        userService.createUser(userEntity);
     }
 
     @PutMapping("/users/{id}")
-    public void updateUser(@RequestBody UserEntity userEntity, @PathVariable int id) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void updateUser(@Valid @RequestBody UserEntity userEntity, @PathVariable int id) {
         userService.updateUser(id, userEntity);
     }
 }

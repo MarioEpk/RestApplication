@@ -1,6 +1,8 @@
 package com.morosystems.restapplication.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "MorosystemsUloha")
@@ -11,6 +13,8 @@ public class UserEntity {
     private int id;
     @Basic
     @Column(name = "name")
+    @NotNull
+    @Size(min = 2, message = "Name field should contain at least 2 characters.")
     private String name;
 
     public int getId() {

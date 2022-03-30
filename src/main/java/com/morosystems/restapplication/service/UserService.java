@@ -34,7 +34,7 @@ public class UserService implements  IUserService {
     }
 
 
-    public void createUser(String name, UserEntity userEntity) {
+    public void createUser(UserEntity userEntity) {
 
         userRepository.save(userEntity);
     }
