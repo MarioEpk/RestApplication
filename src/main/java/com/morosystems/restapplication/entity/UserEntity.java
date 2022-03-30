@@ -17,6 +17,10 @@ public class UserEntity {
     @Size(min = 2, message = "Name field should contain at least 2 characters.")
     private String name;
 
+    @Basic
+    @Column(name = "username")
+    private String username;
+
     public int getId() {
         return id;
     }
