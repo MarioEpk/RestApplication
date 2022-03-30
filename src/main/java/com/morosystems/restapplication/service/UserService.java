@@ -52,4 +52,12 @@ public class UserService implements  IUserService {
     }
 
 
+    public void deleteUser(int id) {
+        if (userRepository.findById(id).isEmpty()) {
+            throw new UserNotFoundException(USER_NOT_FOUND);
+        }
+        userRepository.deleteById(id);
+    }
+
+
 }

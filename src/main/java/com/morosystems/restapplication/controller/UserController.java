@@ -21,11 +21,13 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public UserEntity getUserById(@PathVariable int id) {
+
         return userService.getUserById(id);
     }
 
     @GetMapping("/users")
     public List<UserEntity> getAllUsers() {
+
         return userService.getAllUsers();
     }
 

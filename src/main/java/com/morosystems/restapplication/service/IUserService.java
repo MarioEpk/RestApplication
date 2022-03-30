@@ -10,4 +10,5 @@ public interface IUserService {
     List<UserEntity> getAllUsers();
     void createUser(UserEntity userEntity);
     void updateUser(int id, UserEntity userEntity);
+    void deleteUser(int id);
 }
