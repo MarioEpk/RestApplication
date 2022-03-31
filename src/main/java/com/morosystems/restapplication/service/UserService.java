@@ -40,7 +40,7 @@ public class UserService implements  IUserService {
     }
 
 
-    public void updateUser(int id , UserEntity newUserEntity) {
+    public UserEntity updateUser(int id, UserEntity newUserEntity) {
 
         if (userRepository.findById(id).isEmpty()) {
             throw new UserNotFoundException(USER_NOT_FOUND);
@@ -48,7 +48,8 @@ public class UserService implements  IUserService {
         Optional<UserEntity> optUserEntity = userRepository.findById(id);
         UserEntity userEntity = optUserEntity.get();
         userEntity.setName(newUserEntity.getName());
-        userRepository.save(newUserEntity);
+        userRepository.save(userEntity);
+        return userEntity;
     }
 
 

@@ -19,11 +19,13 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @GetMapping("/users/{id}")
     public UserEntity getUserById(@PathVariable int id) {
 
         return userService.getUserById(id);
     }
+
 
     @GetMapping("/users")
     public List<UserEntity> getAllUsers() {
@@ -31,15 +33,17 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+
     @PostMapping("/users/")
     @ResponseStatus(HttpStatus.CREATED)
     public void addUser(@Valid @RequestBody UserEntity userEntity) {
         userService.createUser(userEntity);
     }
 
+
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void updateUser(@Valid @RequestBody UserEntity userEntity, @PathVariable int id) {
-        userService.updateUser(id, userEntity);
+    public UserEntity updateUser(@Valid @RequestBody UserEntity userEntity, @PathVariable int id) {
+        return userService.updateUser(id, userEntity);
     }
 }
