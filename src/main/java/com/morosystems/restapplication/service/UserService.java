@@ -3,13 +3,17 @@ package com.morosystems.restapplication.service;
 import com.morosystems.restapplication.entity.UserEntity;
 import com.morosystems.restapplication.exception.UserNotFoundException;
 import com.morosystems.restapplication.repository.UserRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
 
-@Component
-public class UserService implements  IUserService {
+@Service
+public class UserService implements  IUserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final String USER_NOT_FOUND = "User with provided id was not found.";
@@ -30,7 +34,7 @@ public class UserService implements  IUserService {
 
 
     public List<UserEntity> getAllUsers() {
-        return (List<UserEntity>) userRepository.findAll();
+        return userRepository.findAll();
     }
 
 
@@ -61,4 +65,12 @@ public class UserService implements  IUserService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findByUsername(username);
+        if (userEntity == null) {
+            throw new UserNotFoundException("User with provided name was not found");
+        }
+        return new UserDetailsImpl(userEntity);
+    }
 }

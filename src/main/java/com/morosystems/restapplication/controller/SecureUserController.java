@@ -1,10 +1,12 @@
 package com.morosystems.restapplication.controller;
 
+import com.morosystems.restapplication.entity.UserEntity;
 import com.morosystems.restapplication.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/secure")
@@ -20,5 +22,13 @@ public class SecureUserController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteUser(@Valid @PathVariable int id) {
         userService.deleteUser(id);
+    }
+
+
+    // Just for testing purposes
+    @GetMapping("/users")
+    public List<UserEntity> getAllUsers() {
+
+        return userService.getAllUsers();
     }
 }

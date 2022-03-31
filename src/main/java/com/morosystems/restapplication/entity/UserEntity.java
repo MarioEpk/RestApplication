@@ -1,7 +1,6 @@
 package com.morosystems.restapplication.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,7 +17,7 @@ public class UserEntity {
     @NotNull
     @Size(min = 2, message = "Name field should contain at least 2 characters.")
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
 

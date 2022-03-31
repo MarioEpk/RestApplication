@@ -4,14 +4,17 @@ import com.morosystems.restapplication.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import java.util.Collection;
 
-public class UserPrincipal implements UserDetails {
 
-    private UserEntity userEntity;
+public class UserDetailsImpl implements UserDetails {
 
 
-    public UserPrincipal(UserEntity userEntity) {
+    private final UserEntity userEntity;
+
+
+    public UserDetailsImpl(UserEntity userEntity) {
         this.userEntity = userEntity;
     }
 
