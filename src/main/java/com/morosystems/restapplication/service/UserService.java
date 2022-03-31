@@ -34,6 +34,9 @@ public class UserService implements  IUserService, UserDetailsService {
 
 
     public List<UserEntity> getAllUsers() {
+        if(userRepository.findAll().isEmpty()) {
+            throw new UserNotFoundException("No users found.");
+        }
         return userRepository.findAll();
     }
 
