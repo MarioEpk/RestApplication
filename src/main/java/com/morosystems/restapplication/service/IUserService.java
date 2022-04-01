@@ -8,7 +8,7 @@ public interface IUserService {
 
     UserEntity getUserById(int id);
     List<UserEntity> getAllUsers();
-    void createUser(UserEntity userEntity);
+    UserEntity createUser(UserEntity userEntity);
     UserEntity updateUser(int id, UserEntity userEntity);
-    void deleteUser(int id);
+    String deleteUser(int id);
 }

@@ -9,20 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.util.Arrays;
-
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest
-class SecureUserControllerTest {
+@WebMvcTest(UserController.class)
+class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,25 +27,23 @@ class SecureUserControllerTest {
     private UserService userService;
 
     @Test
-    @WithMockUser(username="Epack", password = "1234")
-    void testDeleteUser() throws Exception {
-        String URI = "/secure/users/{id}";
+    void testGetUserById() throws Exception {
+
+        String URI = "/users/{id}";
         UserEntity user = new UserEntity();
-        user.setName("user");
+        user.setName("user1");
         user.setId(1);
-        String userWasDeleted = "User with id " + user.getId() +"was deleted.";
 
-        Mockito.when(userService.deleteUser(user.getId())).thenReturn(userWasDeleted);
-
-        mockMvc.perform(MockMvcRequestBuilders.delete(URI, user.getId())
+        Mockito.when(userService.getUserById(1)).thenReturn(user);
+        mockMvc.perform(MockMvcRequestBuilders.get(URI, user.getId())
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                        .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
-    @WithMockUser(username="Epack", password = "1234")
     void testGetAllUsers() throws Exception {
-        String URI = "/secure/users";
+
+        String URI = "/users";
         UserEntity user1 = new UserEntity();
         user1.setName("user1");
         UserEntity user2 = new UserEntity();
@@ -57,8 +51,36 @@ class SecureUserControllerTest {
 
         Mockito.when(userService.getAllUsers()).thenReturn(Arrays.asList(user1, user2));
         mockMvc.perform(MockMvcRequestBuilders.get(URI)
-                        .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    void testAddUserWithoutJson() throws Exception {
+        String URI = "/users";
+        UserEntity user = new UserEntity();
+        user.setName("user");
+        user.setId(1);
+
+        Mockito.when(userService.createUser(user)).thenReturn(user);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(URI)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    void testUpdateUserWithoutJson() throws Exception {
+        String URI = "/users/{id}";
+        UserEntity user = new UserEntity();
+        user.setName("user");
+        user.setId(1);
+
+        Mockito.when(userService.updateUser(user.getId(), user)).thenReturn(user);
+
+        mockMvc.perform(MockMvcRequestBuilders.put(URI, user.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }

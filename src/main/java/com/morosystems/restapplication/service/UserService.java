@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +23,10 @@ public class UserService implements  IUserService, UserDetailsService {
 
 
     public UserEntity getUserById(int id) {
-        UserEntity userEntity;
         if (userRepository.findById(id).isEmpty()) {
             throw new UserNotFoundException(USER_NOT_FOUND);
         }
-        userEntity = userRepository.findById(id).get();
-        return userEntity;
+        return userRepository.findById(id).get();
     }
 
 
@@ -41,9 +38,9 @@ public class UserService implements  IUserService, UserDetailsService {
     }
 
 
-    public void createUser(UserEntity userEntity) {
+    public UserEntity createUser(UserEntity userEntity) {
 
-        userRepository.save(userEntity);
+        return userRepository.save(userEntity);
     }
 
 
@@ -60,11 +57,12 @@ public class UserService implements  IUserService, UserDetailsService {
     }
 
 
-    public void deleteUser(int id) {
+    public String deleteUser(int id) {
         if (userRepository.findById(id).isEmpty()) {
             throw new UserNotFoundException(USER_NOT_FOUND);
         }
         userRepository.deleteById(id);
+        return "User with id " + id +"was deleted.";
     }
 
 

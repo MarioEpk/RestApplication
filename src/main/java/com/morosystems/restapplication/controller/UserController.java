@@ -34,10 +34,10 @@ public class UserController {
     }
 
 
-    @PostMapping("/users/")
+    @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addUser(@Valid @RequestBody UserEntity userEntity) {
-        userService.createUser(userEntity);
+    public UserEntity addUser(@Valid @RequestBody UserEntity userEntity) {
+        return userService.createUser(userEntity);
     }
 
 

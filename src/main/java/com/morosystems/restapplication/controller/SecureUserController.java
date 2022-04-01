@@ -25,7 +25,6 @@ public class SecureUserController {
     }
 
 
-    // Just for testing purposes
     @GetMapping("/users")
     public List<UserEntity> getAllUsers() {
 
