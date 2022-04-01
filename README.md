@@ -1,1 +1,1 @@
-Rest Application using Java Spring tech.
+Rest Application using Java Spring boot tech.
